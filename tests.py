@@ -1,3 +1,4 @@
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,6 +13,9 @@ app_module.flask_app.config['TESTING'] = True
 
 
 class T0UrlUpgradeTests(unittest.TestCase):
+    def test_python_311_or_newer_runtime(self):
+        self.assertGreaterEqual(sys.version_info[:2], (3, 11))
+
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
         app_module.DB = str(Path(self.temp_dir.name) / 'urls')
